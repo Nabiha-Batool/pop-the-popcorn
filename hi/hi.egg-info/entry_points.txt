@@ -1,0 +1,6 @@
+      [paste.app_factory]
+      main = hi:main
+      [console_scripts]
+      populate_hi = hi.scripts.populate:main
+      hi_newapp = hi.scripts.newapp:main
+      
