@@ -12,6 +12,8 @@
   <!--[if lte IE 6]>
   <link rel="stylesheet" href="${request.static_url('hi:static/ie6.css')}" type="text/css" media="screen" charset="utf-8" />
   <![endif]-->
+  ${self.css()}
+  ${self.javascript()}
 </head>
 
 <body class="${self.body_class()}" ${self.body_attrs()}>
@@ -30,6 +32,12 @@
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
   <meta name="keywords" content="python web application" />
   <meta name="description" content="PyCK web application" />
+</%def>
+
+<%def name="css()">
+</%def>
+
+<%def name="javascript()">
 </%def>
 
 <%def name="body_class()">
@@ -61,8 +69,6 @@
 </p>
 </%def>
 <%def name="footer()">
-  <div id="footer">
-    <div class="footer">&copy; Copyright 2008-2012, Set your company name here</div>
-  </div>
+
 </%def>
 

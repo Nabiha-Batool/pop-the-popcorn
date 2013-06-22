@@ -8,11 +8,18 @@ from ..models import (
 
 from ..forms import ContactForm
 
+
 @view_config(route_name='home', renderer='player.mako')
 def my_view(request):
     #one = DBSession.query(Site).filter(Site.name=='one').first()
     one=None
     return {'one':one, 'project':'hi'}
+
+
+@view_config(route_name='player', renderer='player.mako')
+def player(request):
+    return {}
+
 
 @view_config(route_name='contact', renderer="contact.mako")
 def contact_form(request):

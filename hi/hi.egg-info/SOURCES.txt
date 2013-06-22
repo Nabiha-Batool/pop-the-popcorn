@@ -45,8 +45,15 @@ hi/static/pyck-small.png
 hi/static/pyck.png
 hi/static/pylons.css
 hi/static/transparent.gif
+hi/static/playerfiles/bg.jpg
+hi/static/playerfiles/video-js.css
+hi/static/playerfiles/video-js.min.css
+hi/static/playerfiles/video-js.png
+hi/static/playerfiles/video.dev.js
+hi/static/playerfiles/video.js
 hi/templates/base.mako
 hi/templates/contact.mako
 hi/templates/home.mako
+hi/templates/player.mako
 hi/tests/__init__.py
 hi/tests/tests.py
