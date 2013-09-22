@@ -28,6 +28,7 @@ def main(global_config, **settings):
     config.add_route('home', '/')
     config.add_route('contact', '/contact')
     config.add_route('player', '/player')
+    config.add_route('upload', '/upload')
     
     configure_app_routes(config)
     

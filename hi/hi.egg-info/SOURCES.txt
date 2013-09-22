@@ -55,5 +55,6 @@ hi/templates/base.mako
 hi/templates/contact.mako
 hi/templates/home.mako
 hi/templates/player.mako
+hi/templates/player_old.mako
 hi/tests/__init__.py
 hi/tests/tests.py

@@ -3,16 +3,20 @@
 <%def name="title()">Video player working with pyck and mako</%def>
 
 <%def name="css()">
+</center>
 <link href="${request.static_url('hi:static/playerfiles/video-js.css')}" rel="stylesheet" type="text/css">
+</center>
 </%def>
 
 
 <%def name="javascript()">
+<center>
 <script src="${request.static_url('hi:static/playerfiles/video.js')}"></script>
   <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
   <script>
-    videojs.options.flash.swf = "${request.static_url('hi:static/playerfiles/video-js.swf')}";
+    videojs.options.flash.swf = "${request.static_url('hi:static/playerfiles/sample.swf')}";
   </script>
+</center>
 </%def>
 
 
