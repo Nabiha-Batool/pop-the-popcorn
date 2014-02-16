@@ -20,6 +20,7 @@ class Movies(Base):
     id = Column(Integer, primary_key=True)
     movie_name = Column(Unicode(100))
     movie_path = Column(Unicode(1000))
+    code = Column(Unicode(100))
     user_id = Column(Integer, ForeignKey(Info.id))
     
     user = relationship(Info, backref=backref("movies"))

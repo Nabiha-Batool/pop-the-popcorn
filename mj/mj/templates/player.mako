@@ -14,6 +14,9 @@
 <script src="${request.static_url('mj:static/playerfiles/video.js')}"></script>
   <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
   <script>
+    // get
+    var whereYouAt = myPlayer.currentTime();
+
     videojs.options.flash.swf = "${request.static_url('mj:static/playerfiles/sample.swf')}";
   </script>
 </center>

@@ -57,11 +57,11 @@ def upload(request):
 
         os.rename(temp_file_path, file_path)
         fileName, fileExtension = os.path.splitext(fname)
-        if(fileExtension!= '.webm'):
+        if(fileExtension!= '.mp4'):
             # Use os.fchdir() method to change the dir
             #ch=os.open(os.getcwd()+'/mj/static/playerfiles/',os.O_RDONLY)
             #os.fchdir(ch)
-            os.system('ffmpeg -i '+ path + fname +' -acodec copy -vcodec copy '+ path + fileName +'.mp4')
+            os.system('ffmpeg -i '+path+ fname +' -codec:v libx264 -profile:v high -b:v 500k -maxrate 500k -bufsize 1000k -vf scale=-1:480 -threads 0 -codec:a libfdk_aac -b:a 128k '+path+ fileName +'.mp4')
         movie.movie_name = fileName +'.mp4'
         movie.movie_path = temp_file_path
         
