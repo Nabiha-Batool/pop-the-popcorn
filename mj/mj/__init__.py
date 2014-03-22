@@ -40,6 +40,11 @@ def main(global_config, **settings):
     config.add_route('invite', '/invite')
     config.add_route('joingroup', '/joingroup')
 
+    config.add_route('play_master', '/play_master/{movie_name}')
+    config.add_route('play_slave', '/play_slave/{movie_name}')
+    config.add_route('set_position', '/set_position/{movie_name}/{position}')
+    config.add_route('get_position', '/get_position/{movie_name}')
+
     config.add_route('pyckauth_login', '/login')
     config.add_route('pyckauth_logout', '/logout')
     config.add_route('pyckauth_manager', '/auth')

@@ -24,7 +24,7 @@ from mj.auth import is_allowed
           parser.parse();
           });});
   </script>
-
+  ${self.javascript()}
 </head>
 
 <body class="${self.body_class()}" ${self.body_attrs()}>
@@ -43,6 +43,9 @@ from mj.auth import is_allowed
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
   <meta name="keywords" content="python web application" />
   <meta name="description" content="PyCK web application" />
+</%def>
+
+<%def name="javascript()">
 </%def>
 
 <%def name="body_class()">

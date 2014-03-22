@@ -34,3 +34,10 @@ class Friends(Base):
     user_id = Column(Integer, ForeignKey(Info.id))
     
     user = relationship(Info, backref=backref("movies"))'''
+
+
+class Play(Base):
+    __tablename__ = 'plays'
+
+    filename = Column(Unicode(250), primary_key=True)
+    current_position = Column(Integer)
