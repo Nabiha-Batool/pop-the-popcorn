@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+window.onload = function() {
+
+  // Video
+  var video = document.getElementById("video");
+
+  
+  window.setTimeout(update_position, 1000);
+}
+
+function update_position(){
+  document.getElementById("vpos").innerHTML = video.currentTime;
+  window.setTimeout(update_position, 1000);
+}
+
+</script>
+</head>
+<body>
+
+<video id="video" width="640" height="365" controls>
+  <source src="sample.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<br />
+
+<div>
+    Video Position: <span id="vpos">0</span>
+</div>
+  
+</body>
+</html>
