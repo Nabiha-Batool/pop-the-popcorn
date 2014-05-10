@@ -1,86 +1,83 @@
-<%inherit file="base.mako"/>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="${request.static_url('mj:static/jquery.validate.min.js')}" type="text/javascript"></script>
+<script>
+/**
+  * Basic jQuery Validation Form Demo Code
+  * Copyright Sam Deering 2012
+  * Licence: http://www.jquery4u.com/license/
+  */
+(function($,W,D)
+{
+    var JQUERY4U = {};
 
-<%def name="header()">
-
-<%def name="javascript()">
-<script src=${request.static_url('chat:static/jquery-1.4.3.min.js')}" type="text/javascript"></script>
-<script type="text/javascript">
-<!--
-
-/*function MM_closeBrWindow() { //v2.0
-  window.close();
-}
-
- $(document).ready(function ()
+    JQUERY4U.UTIL =
+    {
+        setupFormValidation: function()
         {
-            
-            
-                ShowDialog(true);
-                e.preventDefault();
-            
-
-            $("#btnClose").click(function (e)
-            {
-                HideDialog();
-                e.preventDefault();
+            //form validation rules
+            $("#register-form").validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    code: {
+                        required: true,
+                        
+                    },
+                    
+                },
+                messages: {
+                    
+                    password: {
+                        required: "Please provide a password",
+                        minlength: "Your password must be at least 5 characters long"
+                    },
+                    email: "Please enter a valid email address",
+                    
+                },
+                submitHandler: function(form) {
+                    form.submit();
+                }
             });
-
-            $("#btnSubmit").click(function (e)
-            {
-                HideDialog();
-                e.preventDefault();
-            });
-        });
-
-        function ShowDialog(modal)
-        {
-            $("#overlay").show();
-            $("#dialog").fadeIn(300);
-
-            if (modal)
-            {
-                $("#overlay").unbind("click");
-            }
-            else
-            {
-                $("#overlay").click(function (e)
-                {
-                    HideDialog();
-                });
-            }
         }
+    }
 
-        function HideDialog()
-        {
-            $("#overlay").hide();
-            $("#dialog").fadeOut(300);
-        }*/
+    //when the dom has loaded setup form validation rules
+    $(D).ready(function($) {
+        JQUERY4U.UTIL.setupFormValidation();
+    });
+
+})(jQuery, window, document);
 </script>
-</script>
-</%def>
-</%def>
-<h1>Group invitation</h1>
 
-<!--<div id="overlay" class="web_dialog_overlay"></div>
-    
-<div id="dialog" class="web_dialog"> -->
+<form action="${request.route_url('signin')}" method="post" id="register-form" novalidate="novalidate">
 
-<div style="margin-left: 50px;" align= "center">
+    <h2 style="color:white">INVITATION</h2>
 
-<form action="${request.current_route_url()}" method="POST">
-<table><tr><td>
-         To:  </td><td>&nbsp;&nbsp;&nbsp;
-              <input type="text" name="to"  /> <br /><br /></tr>
-     
- <tr><td>From:</td><td>  &nbsp;&nbsp;&nbsp;
-              <input type="text" name="from"  /> <br /><br /></td></tr>
-  
-  
-    <tr><td>Message: </td><td> &nbsp;&nbsp;&nbsp;
-             User_name is inviting you to watch 
-             <br />&nbsp;&nbsp;&nbsp;movie_name on date_user at time_user 
-             <br />&nbsp;&nbsp;&nbsp;invitation code : <input type="text" name="code" maxlength="5" style="width:50px;"  /> <br /><br /></td></tr>
+    <div id="form-content">
+        <fieldset>
 
-<tr><td></td><td></td><td></td><td><input type="submit" value="Sent" name="form.submitted" onclick ="MM_closeBrWindow()" /></td></tr>
-</table>
-</form></div></center>
+            <div class="fieldgroup"></br></br>
+                <h2 style="color:#0040FF;font-size:20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="email">Email : </label>
+                <input type="text" name="email" id="email" placeholder="example@gmail.com" height="50"></h2>
+            </div>
+
+            <div class="fieldgroup">
+                <h2 style="color:#0040FF;font-size:20px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="password">Messange : </label>${user_name} is inviting you to watch 
+             <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;movie_name on date_user at &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time_user 
+             <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invitation code : 
+<input type="text" name="code" id="code" style="width:50px;"/>
+                
+            </div>
+
+            <div class="fieldgroup"></br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input name="form.submitted" type="submit"  align="right" value="send" style="width:100px;height50px;" />
+            </div>
+
+        </fieldset>
+    </div>
+
+</form>
+<!-- END HTML form for validation -->

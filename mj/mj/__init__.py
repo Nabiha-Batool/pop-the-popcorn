@@ -37,8 +37,11 @@ def main(global_config, **settings):
     config.add_route('upload', '/upload')
     config.add_route('player', '/player/playing/{movie_name}')
     config.add_route('signup', '/signup')
+    config.add_route('signin', '/signin')
     config.add_route('invite', '/invite')
     config.add_route('joingroup', '/joingroup')
+    config.add_route('userhome', '/userhome')
+    config.add_route('signout', '/signout')
 
     config.add_route('play_master', '/play_master/{movie_name}')
     config.add_route('play_slave', '/play_slave/{movie_name}')

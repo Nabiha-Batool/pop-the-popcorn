@@ -2,7 +2,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
 from ..models import DBSession, Play
-
+import re
 
 @view_config(route_name='play_master', renderer='play_master.mako')
 def play_master(request):

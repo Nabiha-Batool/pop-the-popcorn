@@ -2,17 +2,17 @@
 from mj.auth import is_allowed
 %>
 
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   
   <title>${self.title()}</title>
   ${self.meta()}
   
   <link rel="shortcut icon" href="${request.static_url('mj:static/favicon.ico')}" />
-  <link rel="stylesheet" href="${request.static_url('mj:static/pyck.css')}" type="text/css" media="screen" charset="utf-8" />
-  <link rel="stylesheet" href="http://static.pylonsproject.org/fonts/nobile/stylesheet.css" media="screen" />
-  <link rel="stylesheet" href="http://static.pylonsproject.org/fonts/neuton/stylesheet.css" media="screen" />
+  
+  <!--<link rel="stylesheet" href="http://static.pylonsproject.org/fonts/nobile/stylesheet.css" media="screen" />
+  <link rel="stylesheet" href="http://static.pylonsproject.org/fonts/neuton/stylesheet.css" media="screen" />-->
   <!--[if lte IE 6]>
   <link rel="stylesheet" href="${request.static_url('mj:static/ie6.css')}" type="text/css" media="screen" charset="utf-8" />
   <![endif]-->
@@ -24,25 +24,66 @@ from mj.auth import is_allowed
           parser.parse();
           });});
   </script>
+<link rel="stylesheet" href="${request.static_url('mj:static/mjstyle.css')}" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="${request.static_url('mj:static/mjstyle.css')}" type="text/css" media="screen" charset="utf-8" />
+<script src="${request.static_url('mj:static/js/jquery-1.4.2.min.js')}" type="text/javascript"></script>
+<script src="${request.static_url('mj:static/js/cufon-yui.js')}" type="text/javascript"></script>
+<script src="${request.static_url('mj:static/js/cufon-replace.js')}" type="text/javascript"></script>
+<script src="${request.static_url('mj:static/js/Gill_Sans_400.font.js')}" type="text/javascript"></script>
+<script src="${request.static_url('mj:static/js/script.js')}" type="text/javascript"></script>
+<!-- jquery overlay -->
+
+<link rel="stylesheet" href="${request.static_url('mj:static/overlay-apple.css')}" type="text/css" media="screen" charset="utf-8" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script> 
+<script>
+$(function() {
+ 
+    // if the function argument is given to overlay,
+    // it is assumed to be the onBeforeLoad event listener
+    $("a[rel=#overlay]").overlay({
+ 
+        mask: '#3B0B0B',
+        effect: 'apple',
+	closeOnClick: false,
+ 
+        onBeforeLoad: function() {
+ 
+            // grab wrapper element inside content
+            var wrap = this.getOverlay().find(".contentWrap");
+ 
+            // load the page specified in the trigger
+            wrap.load(this.getTrigger().attr("href"));
+        }
+ 
+    });
+});
+</script>
   ${self.javascript()}
 </head>
 
 <body class="${self.body_class()}" ${self.body_attrs()}>
   
   ${self.header()}
-  
+  <!-- overlayed element --> 
+<div class="apple_overlay" id="overlay" style="background-image:url(static/images/banner-img.png);">
+  <!-- the external content is loaded inside this tag -->
+  <div class="contentWrap"></div>
+</div>
   ${self.content_wrapper()}
   ${self.footer()}
-  
+  <script type="text/javascript"> 
+Cufon.now();
+</script>
 </body>
 </html>
 
-<%def name="title()">The PyCK Web Application Development Framework</%def>
+<%def name="title()">Movie Junction</%def>
 
 <%def name="meta()">
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-  <meta name="keywords" content="python web application" />
-  <meta name="description" content="PyCK web application" />
+  <meta name="keywords" content="MJ" />
+  <meta name="description" content="Movie Junction" />
 </%def>
 
 <%def name="javascript()">
@@ -53,13 +94,27 @@ from mj.auth import is_allowed
 <%def name="body_attrs()">
 </%def>
 <%def name="header()">
-  <div id="top-small">
-    <img src="${request.static_url('mj:static/pyck-small.png')}"  alt="pyck"/>
-    ${self.main_menu()}
-  </div>
+  <div class="tail-top">
+	<div class="tail-bottom">
+		<div id="main">
+<!-- HEADER -->
+			<div id="header">
+  <div class="row-1">
+					<div class="fleft"><img src="${request.static_url('mj:static/images/mjlogo.gif')}" alt="" width="250" height="100" /></div>
+					<ul>
+						<li><a href="${request.route_url('home')}"><img src="${request.static_url('mj:static/images/icon1-act.gif')}" alt="" /></a></li>
+						<li><a href="contact-us.html"><img src="${request.static_url('mj:static/images/icon2.gif')}" alt="" /></a></li>
+						<li><a href="sitemap.html"><img src="${request.static_url('mj:static/images/icon3.gif')}" alt="" /></a></li>
+					</ul>
+				</div>
+${self.main_menu()}
+</div></div></div></div>
 </%def>
   
 <%def name="content_wrapper()">
+  <div class="tail-top">
+	<div class="tail-bottom">
+		<div id="main">
   <div id="content">
     <div class="flash">
       <% flash_msgs = request.session.pop_flash() %>
@@ -70,10 +125,24 @@ from mj.auth import is_allowed
     </div>
   ${self.body()}
   </div>
+</div></div></div>
 </%def>
     
 <%def name="main_menu()">
-<p align="center">
+
+<div class="row-2">
+					<ul>
+						<li><a href="${request.route_url('home')}" class="active">Home</a></li>
+						<li><a href="${request.route_url('joingroup')}">Join Group</a></li>
+						<li><a href="${request.route_url('signin')}" rel="#overlay" style="text-decoration:none"> Sign In </a></li>
+						<li><a href="contact-us.html">Contacts</a></li>
+						<li class="last"><a href="sitemap.html">Sitemap</a></li>
+					</ul>
+				</div>
+
+
+
+<!--<p align="center">
   
   <a href="${request.route_url('home')}">Home</a> |
   <a href="${request.route_url('contact')}">Contact Us</a> |
@@ -94,11 +163,25 @@ from mj.auth import is_allowed
   <a href="${request.route_url('pyckauth_login')}">Login</a>
   %endif
   
-</p>
+</p>-->
 </%def>
 <%def name="footer()">
-  <div id="footer">
-    <div class="footer">&copy; Copyright 2008-2012, Set your company name here</div>
-  </div>
+  <!-- FOOTER -->
+<div class="tail-top">
+	<div class="tail-bottom">
+		<div id="main">
+			<div id="footer">
+				<div class="left">
+					<div class="right">
+						<div class="inside">Copyright - Movie Junction<br />
+							<a rel="nofollow" href="http://www.templatemonster.com/" class="new_window">Website template</a> designed by TemplateMonster.com<br />
+							<a href="http://www.templates.com/product/3d-models/" class="new_window">3D Models</a> provided by Templates.com 
+						</div>
+					</div>
+				</div>
+			</div>
+
+</div></div>
+</div>
 </%def>
 
