@@ -1,23 +1,7 @@
 <%inherit file="base.mako"/>
 
-<%def name="title()">Video player working with pyck and mako</%def>
-
-<%def name="css()">
-</center>
-<link href="${request.static_url('mj:static/playerfiles/video-js.css')}" rel="stylesheet" type="text/css">
-</center>
-</%def>
-
 <%def name="javascript()">
-<script>
-    videojs.options.flash.swf = "video-js.swf";
-</script>
-<script>
-videojs.Control = videojs.Component.extend();
-videojs.Button = videojs.Control.extend();
-videojs.PlayToggle = videojs.Button.extend();
-videojs.PlayToggle.off();
-</script>
+
 <script>
 
 window.onload = function() {
@@ -46,7 +30,11 @@ function update_position(){
                 video.pause();
 		video.currentTime = 0;
                 
-            }else{
+            }
+	    else if (pos == Math.floor(video.currentTime) || pos == Math.floor(video.duration) ) {
+		video.pause();
+	    }
+	    else{
                 if (video.paused) {
                     video.play();
                 }
@@ -72,7 +60,7 @@ function update_position(){
 </%def>
 
 
-<video id="video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="http://video-js.zencoder.com/oceans-clip.png"
+<video id="video" class="video-js vjs-default-skin" controls width="640" height="264" poster="http://video-js.zencoder.com/oceans-clip.png"
       data-setup="{}">
   <source src="${request.static_url('mj:static/playerfiles/' + movie_name)}" type="video/mp4">
   Your browser does not support the video tag.

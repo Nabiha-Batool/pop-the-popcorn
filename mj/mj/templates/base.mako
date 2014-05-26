@@ -24,8 +24,8 @@ from mj.auth import is_allowed
           parser.parse();
           });});
   </script>
-<link rel="stylesheet" href="${request.static_url('mj:static/mjstyle.css')}" type="text/css" media="screen" charset="utf-8" />
-<link rel="stylesheet" href="${request.static_url('mj:static/mjstyle.css')}" type="text/css" media="screen" charset="utf-8" />
+<link rel="stylesheet" href="${request.static_url('mj:static/main.css')}" type="text/css" media="screen" charset="utf-8" />
+
 <script src="${request.static_url('mj:static/js/jquery-1.4.2.min.js')}" type="text/javascript"></script>
 <script src="${request.static_url('mj:static/js/cufon-yui.js')}" type="text/javascript"></script>
 <script src="${request.static_url('mj:static/js/cufon-replace.js')}" type="text/javascript"></script>
@@ -66,7 +66,7 @@ $(function() {
   
   ${self.header()}
   <!-- overlayed element --> 
-<div class="apple_overlay" id="overlay" style="background-image:url(static/images/banner-img.png);">
+<div class="apple_overlay" id="overlay" style="background-image:url(/static/images/banner-img.png);">
   <!-- the external content is loaded inside this tag -->
   <div class="contentWrap"></div>
 </div>
@@ -84,6 +84,7 @@ Cufon.now();
   <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
   <meta name="keywords" content="MJ" />
   <meta name="description" content="Movie Junction" />
+  <meta name="viewport" content="width=device-width">
 </%def>
 
 <%def name="javascript()">
@@ -101,11 +102,7 @@ Cufon.now();
 			<div id="header">
   <div class="row-1">
 					<div class="fleft"><img src="${request.static_url('mj:static/images/mjlogo.gif')}" alt="" width="250" height="100" /></div>
-					<ul>
-						<li><a href="${request.route_url('home')}"><img src="${request.static_url('mj:static/images/icon1-act.gif')}" alt="" /></a></li>
-						<li><a href="contact-us.html"><img src="${request.static_url('mj:static/images/icon2.gif')}" alt="" /></a></li>
-						<li><a href="sitemap.html"><img src="${request.static_url('mj:static/images/icon3.gif')}" alt="" /></a></li>
-					</ul>
+					
 				</div>
 ${self.main_menu()}
 </div></div></div></div>
@@ -117,10 +114,11 @@ ${self.main_menu()}
 		<div id="main">
   <div id="content">
     <div class="flash">
+      
       <% flash_msgs = request.session.pop_flash() %>
       
       %for flash_msg in flash_msgs:
-        ${flash_msg}<br />
+        <br /><br /><br />${flash_msg}<br />
       %endfor
     </div>
   ${self.body()}
@@ -135,8 +133,8 @@ ${self.main_menu()}
 						<li><a href="${request.route_url('home')}" class="active">Home</a></li>
 						<li><a href="${request.route_url('joingroup')}">Join Group</a></li>
 						<li><a href="${request.route_url('signin')}" rel="#overlay" style="text-decoration:none"> Sign In </a></li>
-						<li><a href="contact-us.html">Contacts</a></li>
-						<li class="last"><a href="sitemap.html">Sitemap</a></li>
+						<li><a href="${request.route_url('contact')}">Contacts</a></li>
+						
 					</ul>
 				</div>
 

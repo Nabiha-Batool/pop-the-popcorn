@@ -109,7 +109,7 @@ h4 {font-size:20px;line-height:1.2em;letter-spacing:-1px;color:#2c6d9a;margin-bo
 .link2:hover span {text-decoration:underline;}
 .link2 span {display:block;float:left;padding:0 6px;background:url(images/link2-left.gif) no-repeat left top;}
 .link2 span span {display:block;background:url(images/link2-tail.gif) repeat-x left top;padding:9px 15px 10px 15px;}
-.line-hor {overflow:hidden;font-size:0;line-height:0;width:918px;height:8px;margin-left:11px;background:url(images/line-hor.gif) repeat-x left top;z-index:1;position:relative;}
+.line-hor {overflow:hidden;font-size:0;line-height:0;width:918px;top:5px;height:8px;margin-left:11px;background:url(images/line-hor.gif) repeat-x left top;z-index:1;position:relative;}
 /* BOXES */
 .box {
 	width:100%;
@@ -134,7 +134,7 @@ h4 {font-size:20px;line-height:1.2em;letter-spacing:-1px;color:#2c6d9a;margin-bo
 #header .row-1 ul li {float:left;padding-left:54px;}
 #header .row-2 {height:51px;}
 #header .row-2 ul {width:100%;overflow:hidden;}
-#header .row-2 ul li {float:left;font-size:20px;line-height:2.4em;margin-right:5px;background-color:#000;}
+#header .row-2 ul li {float:left;font-size:20px;line-height:2.4em;margin-right:50px;background-color:#000;}
 #header .row-2 ul li.last {margin-right:0;}
 #header .row-2 ul li a {text-decoration:none;color:#f0f0f0;width:184px;height:56px;float:left;background-image:url(images/nav-bg.gif);background-repeat:no-repeat;background-position:0 0;text-align:center;}
 #header .row-2 ul li a:hover, #header .row-2 ul li a.active {color:#d72a18;background-image:url(images/nav-act.gif);}
@@ -189,8 +189,8 @@ h4 {font-size:20px;line-height:1.2em;letter-spacing:-1px;color:#2c6d9a;margin-bo
 	float: right;
 }
 #signup .signupheader {
-	float: right;
-	text-align: center;
+	/*float: right;*/
+	text-align: left;
 	font-size: 18px;
 	margin-left: 170px;
 }
@@ -241,7 +241,7 @@ body:before{content:"";height:100%;float:left;width:0;margin-top:-32767px;}
 
 /*PyCK styles*/
 .errors {color: #ff0000; font-weight: bold;}
-.flash {background-color: #ABFF93; font-size: 16pt; alignment-adjust: middle; text-align: center;}
+.flash {/*background-color: #ABFF93;*/background:url(images/line-hor.gif); font-size: 16pt; alignment-adjust: middle; text-align: center; color:#ff0000;top:10px;}
 
 #register-form .fieldgroup label.error {
     color: #ff0000;

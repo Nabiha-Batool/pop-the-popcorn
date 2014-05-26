@@ -15,7 +15,7 @@ def play_master(request):
     return dict(movie_name=movie)
 
 
-@view_config(route_name='play_slave', renderer='play_slave.mako')
+@view_config(route_name='play_slave', renderer='slaveplayer.mako')
 def play_slave(request):
     "Controller for slave players who just watch and can't control playback"
 
@@ -40,6 +40,9 @@ def set_position(request):
         movie.current_position = position
         DBSession.add(movie)
     else:
+        #if position == movie.current_position:
+            #movie.current_position = -1
+        #else:
         movie.current_position = position
 
     return {"msg": "OK"}

@@ -1,12 +1,12 @@
 <%inherit file="base.mako"/>
 <%def name="title()">Join Movie Group- Movie Junction</%def>
-<body id="page2">
+
 <%def name="main_menu()">
 				<div class="row-2">
 					<ul>
 						<li>
 %if request.session.get('logged_in', None):
-<a href="${request.route_url('userhome')}">Home</a>
+<a href="${request.route_url('userhome',page=1)}">Home</a>
 %else:
 <a href="${request.route_url('home')}"> Home </a>
 %endif
@@ -20,27 +20,27 @@
 %endif
 
 </li>
-						<li><a href="contact-us.html">Contacts</a></li>
-						<li class="last"><a href="sitemap.html">Sitemap</a></li>
+						<li><a href="${request.route_url('contact')}">Contacts</a></li>
+						
 					</ul>
 				</div>
 <!-- overlayed element--> 
-<div class="apple_overlay" id="overlay" style="background-image:url(static/images/banner-img.png);">
+<div class="apple_overlay" id="overlay" style="background-image:url(/static/images/banner-img.png);">
   <!-- the external content is loaded inside this tag--> 
   <div class="contentWrap"></div>
 </div>
 </%def>
-
+<body id="page1">
 <!-- CONTENT -->
-			
+			<div id="content">
 				<div class="line-hor"></div>
-				<div class="box" style="background:url(static/images/Untitled.png)">
+				<div class="box" style="background:url(/static/images/Untitled.png)">
 					<div class="border-right">
 					  <div class="border-left">
 							<div class="inner">
 								<h3>&nbsp;</h3>
                               <p>&nbsp;</p>
-<form action="${request.route_url('joingroup')}" method="POST">
+<form action="${request.current_route_url()}" method="POST">
                               <div class="abcodebox" id="abcodebox">
                                 <div class="relcodebox" id="relcodebox">
 ${joingroup.code(cols="17",rows="6",placeholder="Enter Movie Code")}
@@ -61,7 +61,7 @@ ${joingroup.code(cols="17",rows="6",placeholder="Enter Movie Code")}
                               <p>&nbsp;</p>
                               <p>&nbsp;</p>
                               <div class="abbutton" id="abbutton">
-                                <div class="relbutton" id="relbutton"><input name="submit" type="submit" value="submit" style="width:100px;height50px" /></div>
+                                <div class="relbutton" id="relbutton"><input name="form.submitted" type="submit"  align="right" value="signin" style="width:100px;height50px;" /></div>
                               </div></form>
                               <p>&nbsp;</p>
                               <p>&nbsp;</p>
@@ -77,5 +77,5 @@ ${joingroup.code(cols="17",rows="6",placeholder="Enter Movie Code")}
 				<!--<div class="content">
 				</div>-->
 		  </div>
-
+</div>
 </body>

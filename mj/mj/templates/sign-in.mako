@@ -24,7 +24,7 @@
                     },
                     password: {
                         required: true,
-                        minlength: 5
+                        //minlength: 5
                     },
                     
                 },
@@ -32,7 +32,7 @@
                     
                     password: {
                         required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
+                        //minlength: "Your password must be at least 5 characters long"
                     },
                     email: "Please enter a valid email address",
                     
@@ -52,10 +52,14 @@
 })(jQuery, window, document);
 </script>
 
+
+<h2 style="color:white">Sign IN</h2>
 <!-- HTML form for validation demo -->
 <form action="${request.route_url('signin')}" method="post" id="register-form" novalidate="novalidate">
-
-    <h2 style="color:white">Sign IN</h2>
+%if msg:
+${msg}
+%endif
+    
 
     <div id="form-content">
         <fieldset>
@@ -80,38 +84,3 @@
 
 </form>
 <!-- END HTML form for validation -->
-
-
-
-
-<!--<form action="${request.route_url('signin')}" method="POST">
-<p></p><h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      User <span>Name : </span>
-
-${signin_form.user_name(placeholder="dsads@sdsds.com")}
-%for fieldName, errorMessages  in signin_form.errors.iteritems():
-%if 'user_name' == fieldName:
-%for err in errorMessages:
-<br />
-<div class="errors">    
-${err}
-</div>
-%endfor
-%endif
-%endfor
-</h3>
-							  <p>&nbsp;</p>
-                                <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      Pass<span>word : <input name="password" type="password" value="password" /></span></h3>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      
-<input name="form.submitted" type="submit"  align="right" value="signin" style="width:100px;height50px;" />
-</form>-->

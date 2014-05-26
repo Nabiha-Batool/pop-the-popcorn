@@ -12,4 +12,4 @@ Base = declarative_base()
 from auth import Permission, User, UserPermission, RoutePermission
 from models import *
 # Place additional model names here for ease of importing.
-__all__ = ['DBSession', 'Base', 'Permission', 'User', 'UserPermission', 'RoutePermission', 'Info','Movies','Friends','Play']
+__all__ = ['DBSession', 'Base', 'Permission', 'User', 'UserPermission', 'RoutePermission', 'Info','Movies','Groups','Play']

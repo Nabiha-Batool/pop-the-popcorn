@@ -20,12 +20,6 @@ class Info(Base):
     email = Column(Unicode(100))
     password = Column(Unicode(100))
 
-class Friends(Base):
-    __tablename__='friends'
-    id = Column(Integer, primary_key=True)
-    frnd_emails = Column(Unicode(100))
-    user_id = Column(Integer, ForeignKey(Info.id))
-
 class Movies(Base):
     __tablename__='movies'
     id = Column(Integer, primary_key=True)
@@ -35,3 +29,13 @@ class Movies(Base):
     movie_member = Column(Integer)
     user_id = Column(Integer, ForeignKey(Info.id))
     user = relationship(Info, backref=backref("movies"))
+
+class Groups(Base):
+    __tablename__='groups'
+    id = Column(Integer, primary_key=True)
+    code = Column(Unicode(100))
+    frnd_emails = Column(Unicode(100))
+    movie_member = Column(Integer)
+    movie_name = Column(Unicode(100))
+    movie_id = Column(Integer, ForeignKey(Movies.id))
+

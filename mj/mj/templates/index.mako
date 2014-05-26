@@ -2,7 +2,7 @@
 <%def name="title()">Home - Movie Junction</%def>
 <body id="page1">
 <!-- CONTENT -->
-			<!--<div id="content"><div class="ic">More Website Templates at TemplateMonster.com!</div>-->
+			<div id="content"><!--<div class="ic">More Website Templates at TemplateMonster.com!</div>-->
 				<div id="slogan">
 					<div class="image png"></div>
 					<div class="inside">
@@ -20,9 +20,12 @@
 								<h3><b>&nbsp;&nbsp;&nbsp;Movie</b> <span>Junction </span></h3>
 								<div class="signup" id="signup">
 								  <div class="innersignup" id="innersignup"><h3>Sign Up</h3>
-								    <div class="signupheader">&nbsp;
+%if msg:
+<h4 style="color:red">${msg}</h4>
+%endif
+								    <div class="signupheader">
 <form action="${request.current_route_url()}" method="POST">
-${signup_form.as_p(labels="top", errors="right") | n }
+${signup_form.as_p(labels="top", errors="bottom") | n }
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="Sent" name="form.submitted" style="width:100px;height50px;" align="right" /></form>
 </div>
 								  </div>
@@ -32,11 +35,11 @@ ${signup_form.as_p(labels="top", errors="right") | n }
 </br></br></br></br></br></br>
 </br></br></br></br></br></br>
 </br></br></br></br></br></br>
-
+</br></br></br></br></br></br>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!--<div class="content"></div>-->
+			</div>	<!--<div class="content"></div>-->
 			
 </body>

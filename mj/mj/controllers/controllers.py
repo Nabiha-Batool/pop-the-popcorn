@@ -1,5 +1,8 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
+import smtplib
+from smtplib         import SMTP_SSL
+from getpass         import getpass
 import os, re
 import subprocess
 import uuid
@@ -23,14 +26,18 @@ def my_view(request):
             I.password = request.POST['password']
             I.first_name = request.POST['first_name']
             I.last_name = request.POST['last_name']
-            I.email = request.POST['email']
+            user = DBSession.query(Info).filter_by(email=request.POST['email']).first()
+            if not user:
+                I.email = request.POST['email']
+            else:
+                return{'msg':"email id already exists!",'signup_form': f}
             DBSession.add(I)
         
             request.session['logged_in'] = True
             request.session['user_name'] = I.first_name
-        
+            request.session ['user_email'] = I.email
             request.session.flash("Sign up Successfully!")
-            return HTTPFound(location=request.route_url('userhome'))
+            return HTTPFound(location=request.route_url('userhome',page=1))
     
     
     return {'signup_form': f}
@@ -87,22 +94,27 @@ def upload(request):
         
         DBSession.add(movie)
         request.session.flash("Uploading ComPleteD :)!")
-        return HTTPFound(location=request.route_url('userhome'))
+        return HTTPFound(location=request.route_url('userhome',page=1))
     return {}
 
 @view_config(route_name='invite', renderer='invite.mako')
 def invite(request):
     f = InviteForm(request.POST)
+    movie=request.matchdict['movie_name']
     if 'POST' == request.method and 'form.submitted' in request.params:
-        if f.validate() and request.session['logged_in'] == True:
+        if request.session.get('logged_in', None):
+            
             to = request.POST['email']
             me = ('moviex.junction@gmail.com')
             code = request.POST['code']
-            I = Info()
-            I.code = code
-            msg = str (request.session['user_name'])+ " is inviting you to watch movie_name on date_user at time_user " + str(code)
-            
-            password= ('movies.junction')
+            g = Groups()
+            g.code = code
+            g.movie_name = movie
+            g.movie_member = 0
+            DBSession.add(g)
+            msg = str (request.session['user_name'])+ " is inviting you to watch "+movie+" on date_user at time_user " + str(code)
+            msg = 'Subject: Movie Invitation \n\n%s' % (msg)
+            password= 'movies.junction'
             # send it via gmail
             s = SMTP_SSL('smtp.gmail.com', 465, timeout=10)
             #s = smtplib.SMTP('smtp.live.com', 25) #4 hotmail
@@ -116,7 +128,7 @@ def invite(request):
             request.session.flash("Your message has been sent!")
             return HTTPFound(location=request.route_url('home'))
         
-    return {'invite_form':f,'user_name':request.session['user_name']}
+    return {'invite_form':f,'user_name':request.session['user_name'],'movie_name':movie}
 
 @view_config(route_name='signup', renderer='json')
 def signup_form(request):
@@ -131,14 +143,14 @@ def signup_form(request):
             I.password = request.POST['password']
             I.first_name = request.POST['first_name']
             I.last_name = request.POST['last_name']
-            I.email = request.POST['email']
+            
             DBSession.add(I)
         
             request.session['logged_in'] = True
             request.session['user_name'] = I.first_name
         
             request.session.flash("Sign up Successfully!")
-            return HTTPFound(location=request.route_url('userhome'))
+            return HTTPFound(location=request.route_url('userhome', page=1))
     
     
     return {'signup_form': f}
@@ -150,14 +162,19 @@ def joingroup(request):
            
     if 'POST' == request.method and 'form.submitted' in request.params:
         if f.validate():
-            movie = DBSession.query(Movies).filter_by(code=request.POST['codebox']).first()
-            movie_member=movie.movie_member
-            if movie.movie_member is None:
-                movie.movie_member= 0
-                return HTTPFound(location=request.route_url('play_master',movie_name=movie.movie_name))
-            else:
-                movie.movie_member = movie_member + 1
-                return HTTPFound(location=request.route_url('play_slave',movie_name=movie.movie_name))
+            movie = DBSession.query(Groups).filter_by(code=request.POST['code']).first()
+            if movie is None:
+                    request.session.flash("invalid group CODE!")
+                    return HTTPFound(location=request.route_url('joingroup'))
+            else:    
+                #movie_member=movie.movie_member
+                if movie.movie_member == 0:#is None:
+                    movie.movie_member = movie.movie_member + 1
+                    #movie.movie_member= 0
+                    return HTTPFound(location=request.route_url('play_master',movie_name=movie.movie_name))
+                else:
+                    movie.movie_member = movie.movie_member + 1
+                    return HTTPFound(location=request.route_url('play_slave',movie_name=movie.movie_name))
     
     return {'joingroup':f}
 
@@ -169,24 +186,49 @@ def signin(request):
             user = DBSession.query(Info).filter_by(email=request.POST['email'],password=request.POST['password']).first()
             if (user is None):
                 request.session.flash("invalid email id or password!")
-                return HTTPFound(location=request.route_url('home'))
+                return{'msg':"invalid email id or password!"}
             else:
                 request.session['logged_in'] = True
                 request.session ['user_name'] = user.first_name
                 request.session ['user_email'] = user.email
-                return HTTPFound(location=request.route_url('userhome'))
+                return HTTPFound(location=request.route_url('userhome',page=1))
             
     return{'signin_form':f}
 
 @view_config(route_name='userhome', renderer='userhome.mako')
 def userhome(request):
-    if (request.session['logged_in'] == True) :
+    if request.session.get('logged_in', None) :
         name = request.session['user_name']
         user = DBSession.query(Info).filter_by(email=request.session['user_email']).first()
-        user_movie = DBSession.query(Movies).filter_by(user_id=user.id).all()
+        total_movie = DBSession.query(Movies).filter_by(user_id=user.id).count()
+        
+        page=request.matchdict['page']
+        page=int(page)
+        start = ((page - 1) * 4)
+        end = (start + 4)
+        temp=end-1
+        user_movie = DBSession.query(Movies).filter_by(user_id=user.id)[start:end]
+        if total_movie == end:
+            temp=end-1
+            last = DBSession.query(Movies).filter_by(user_id=user.id)[temp]
+        elif total_movie == start:
+            return{'user_movie':user_movie,'next':page,'page':page,'username':name}
+        else:
+            for i in range(1,5):
+                end1=end-i
+                if total_movie == end1:
+                    temp=end1-1
+            last = DBSession.query(Movies).filter_by(user_id=user.id)[temp]
+        
+        
+        last_rec = DBSession.query(Movies).filter_by(user_id=user.id)[-1]
+        if last.id==last_rec.id:
+            return{'user_movie':user_movie,'next':page,'page':page,'username':name}
+        else:
+            return{'user_movie':user_movie,'next':page+1,'page':page,'username':name}
+    
     else:
         return HTTPFound(location=request.route_url('home'))
-    return {'username' : name , 'user_movie' :user_movie}
 
 @view_config(route_name='signout')
 def signout(request):
@@ -208,6 +250,23 @@ def contact_form(request):
     if 'POST' == request.method and 'form.submitted' in request.params:
         if f.validate():
             #TODO: Do email sending here.
+            to = 'nabiha_batool99@hotmail.com,great.nabiha@gmail.com'
+            user_from = request.POST['email']
+            me = ('moviex.junction@gmail.com')
+            subject = request.POST['subject']
+            msg = str (request.POST['message']+"\n\nFrom : "+user_from)
+            msg = 'Subject: %s' % (subject) + ' \n\n%s' % (msg)
+            password= 'movies.junction'
+            # send it via gmail
+            s = SMTP_SSL('smtp.gmail.com', 465)
+            #s = smtplib.SMTP('smtp.live.com', 25) #4 hotmail
+            s.set_debuglevel(0)
+            #s = smtplib.SMTP('localhost')
+            try:
+                s.login(me, password)
+                s.sendmail(me, to.split(","), msg)
+            finally:
+                s.quit()
 
             request.session.flash("Your message has been sent!")
             return HTTPFound(location=request.route_url('home'))
